@@ -193,7 +193,7 @@ EOF
 	unzip trojan-cli.zip
 	unzip /usr/src/trojan-temp/trojan-${latest_version}-win.zip -d /usr/src/trojan-temp/
 	cp /usr/src/trojan-cert/fullchain.cer /usr/src/trojan-cli/fullchain.cer
-	mv -f /usr/src/trojan-temp/trojan/trojan.exe /usr/src/trojan-cli/ 
+	mv -f /usr/src/trojan-temp/trojan/trojan.exe /usr/src/trojan-cli/
         #下载trojan MAC客户端
         wget -P /usr/src/trojan-macos https://github.com/trojan-gfw/trojan/releases/download/v${latest_version}/trojan-${latest_version}-macos.zip
         unzip /usr/src/trojan-macos/trojan-${latest_version}-macos.zip -d /usr/src/trojan-macos/
@@ -324,22 +324,22 @@ EOF
         cd /usr/src/trojan-macos/
         zip -q -r trojan-mac.zip /usr/src/trojan-macos/
         mv /usr/src/trojan-macos/trojan-mac.zip /usr/share/nginx/html/${trojan_path}/
-	
-    #增加启动脚本	
+
+    #增加启动脚本
 cat > ${systempwd}trojan.service <<-EOF
-[Unit]  
-Description=trojan  
-After=network.target  
-   
-[Service]  
-Type=simple  
+[Unit]
+Description=trojan
+After=network.target
+
+[Service]
+Type=simple
 PIDFile=/usr/src/trojan/trojan/trojan.pid
-ExecStart=/usr/src/trojan/trojan -c "/usr/src/trojan/server.conf"  
-ExecReload=  
-ExecStop=/usr/src/trojan/trojan  
-PrivateTmp=true  
-   
-[Install]  
+ExecStart=/usr/src/trojan/trojan -c "/usr/src/trojan/server.conf"
+ExecReload=
+ExecStop=/usr/src/trojan/trojan
+PrivateTmp=true
+
+[Install]
 WantedBy=multi-user.target
 EOF
 
@@ -356,6 +356,9 @@ EOF
 	green "Trojan推荐使用 Mellow 工具代理（WIN/MAC通用）下载地址如下："
 	green "https://github.com/mellow-io/mellow/releases  (exe为Win客户端,dmg为Mac客户端)"
 	green "======================================================================"
+    green "server: ${your_domain}"
+    green "port: 443"
+    green "password: ${trojan_passwd}"
 	else
         red "==================================="
 	red "https证书没有申请成果，自动安装失败"
@@ -364,7 +367,7 @@ EOF
 	green "2. 重新执行脚本，使用修复证书功能"
 	red "==================================="
 	fi
-	
+
 else
 	red "================================"
 	red "域名解析地址与本VPS IP地址不一致"
@@ -408,7 +411,7 @@ else
     red "域名解析地址与本VPS IP地址不一致"
     red "本次安装失败，请确保域名解析正常"
     red "================================"
-fi	
+fi
 }
 
 function remove_trojan(){
@@ -462,13 +465,13 @@ start_menu(){
     install_trojan
     ;;
     2)
-    remove_trojan 
+    remove_trojan
     ;;
     3)
-    repair_cert 
+    repair_cert
     ;;
     4)
-    bbr_boost_sh 
+    bbr_boost_sh
     ;;
     0)
     exit 1
